@@ -1,12 +1,12 @@
 package frc.robot;
 
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
+// import com.pathplanner.lib.auto.NamedCommands;
+// import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import frc.command.*;
 import frc.robot.RobotMap.OIConstants;
 import frc.subsystems.*;
-import frc.util.AutoSelector;
+// import frc.util.AutoSelector;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -69,7 +69,7 @@ public class OI {
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
     private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-    public AutoSelector autoSelector = new AutoSelector(drivetrainSubsystem, indexerSubsystem, intakeSubsystem, shooterSubsystem);
+    // public AutoSelector autoSelector = new AutoSelector(drivetrainSubsystem, indexerSubsystem, intakeSubsystem, shooterSubsystem);
     
     SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -118,8 +118,8 @@ public class OI {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> drivetrainSubsystem.drive(
-                -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(driveController.getRawAxis(1)*0.1, OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(driveController.getRawAxis(0)*0.1, OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
                 () -> !driveLeftBumper.getAsBoolean(), true, () -> manipGoogle.getAsBoolean(),
                 () -> driveLeftTrigger.getAsBoolean(), () -> driveRightTrigger.getAsBoolean(), () -> manipLeftBumper.getAsBoolean()),
@@ -133,20 +133,20 @@ public class OI {
 
         driveYButton.onTrue(new InstantCommand(() -> {lightSubsystem.isRainbowing = true;}));
 
-        NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
-        NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
-        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem, limeLightVisionSubsystem));
-        NamedCommands.registerCommand("RampShoot", new RunShoot(shooterSubsystem));
-        NamedCommands.registerCommand("SetWrist:.95", new ManualSetWrist(shooterSubsystem, .95));
-        NamedCommands.registerCommand("SetWrist:.92", new ManualSetWrist(shooterSubsystem, .92));
-        NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .9));
-        NamedCommands.registerCommand("PreShoot", new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
-        NamedCommands.registerCommand("OverridePreShoot", new OverridePreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
-        NamedCommands.registerCommand("AutoAlignShoot.95", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .95));
-        NamedCommands.registerCommand("AutoAlignShoot.90", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .9));
-        NamedCommands.registerCommand("AutoAlignShoot.94", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .92));
-        NamedCommands.registerCommand("AutoAlignShoot.93", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .905));
-        NamedCommands.registerCommand("AlignShoot.95", new AlignShootCmd3(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .96));
+        // NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
+        // NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
+        // NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem, limeLightVisionSubsystem));
+        // NamedCommands.registerCommand("RampShoot", new RunShoot(shooterSubsystem));
+        // NamedCommands.registerCommand("SetWrist:.95", new ManualSetWrist(shooterSubsystem, .95));
+        // NamedCommands.registerCommand("SetWrist:.92", new ManualSetWrist(shooterSubsystem, .92));
+        // NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .9));
+        // NamedCommands.registerCommand("PreShoot", new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
+        // NamedCommands.registerCommand("OverridePreShoot", new OverridePreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
+        // NamedCommands.registerCommand("AutoAlignShoot.95", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .95));
+        // NamedCommands.registerCommand("AutoAlignShoot.90", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .9));
+        // NamedCommands.registerCommand("AutoAlignShoot.94", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .92));
+        // NamedCommands.registerCommand("AutoAlignShoot.93", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .905));
+        // NamedCommands.registerCommand("AlignShoot.95", new AlignShootCmd3(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .96));
 
 
         
@@ -243,19 +243,19 @@ public class OI {
    * @return the command to run in autonomous
    */
   // WHEN CHANGING THE AUTO NAME HERE, REMEMBER TO CHANGE THE AUTO NAME IN DRIVESUBSYSTEM (BOTTOM LINES)
-    public Command getAutonomousCommand() {
-       return new PathPlannerAuto("bottom clear");
-        // return new PathPlannerAuto("4 piece close center");
-        // return new PathPlannerAuto("Quick 4 piece close");
-      //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
-        // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
-        // return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
-        // return new TheOnePiece(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
-        // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
+  //   public Command getAutonomousCommand() {
+  //     //  return new PathPlannerAuto("bottom clear");
+  //       // return new PathPlannerAuto("4 piece close center");
+  //       // return new PathPlannerAuto("Quick 4 piece close");
+  //     //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+  //       // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+  //       // return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+  //       // return new TheOnePiece(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+  //       // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
-        // Create a path following command using AutoBuilder. This will also trigger event markers.
-        // return AutoBuilder.followPath(path);
-        // return autoSelector.getSelected();
-  }
+  //       // Create a path following command using AutoBuilder. This will also trigger event markers.
+  //       // return AutoBuilder.followPath(path);
+  //       // return autoSelector.getSelected();
+  // }
 
 }

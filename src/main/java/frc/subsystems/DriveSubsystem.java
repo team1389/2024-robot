@@ -7,13 +7,6 @@ package frc.subsystems;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -103,50 +96,50 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem(LimelightVisionSubsystem limelightVisionSubsystem){
-      double x = getAutoStart().getX();
-      double y = getAutoStart().getY();
-      Rotation2d theta = getAutoStart().getRotation();
+      // double x = getAutoStart().getX();
+      // double y = getAutoStart().getY();
+      // Rotation2d theta = getAutoStart().getRotation();
 
-      m_odometry = new SwerveDriveOdometry(
-      DriveConstants.kDriveKinematics,
-      Rotation2d.fromDegrees(-pigeon.getAngle()),
-      new SwerveModulePosition[] {
-          frontLeft.getPosition(),
-          frontRight.getPosition(),
-          backLeft.getPosition(),
-          backRight.getPosition()
-      },
-      new Pose2d(x, y, theta));
-      // new Pose2d(1.38,5.57,new Rotation2d(0)));
+    //   m_odometry = new SwerveDriveOdometry(
+    //   DriveConstants.kDriveKinematics,
+    //   Rotation2d.fromDegrees(-pigeon.getAngle()),
+    //   new SwerveModulePosition[] {
+    //       frontLeft.getPosition(),
+    //       frontRight.getPosition(),
+    //       backLeft.getPosition(),
+    //       backRight.getPosition()
+    //   },
+    //   // new Pose2d(x, y, theta));
+    //   // new Pose2d(1.38,5.57,new Rotation2d(0)));
 
-    commandAlign = false;
+    // commandAlign = false;
     poseEstimator = new SwerveDrivePoseEstimator(RobotMap.DriveConstants.kDriveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
-    AutoBuilder.configureHolonomic(
-            this::getPose, // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            () -> kinematics.toChassisSpeeds(getModuleStates()), // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-                    4.5, // Max module speed, in m/s 
-                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
-                    new ReplanningConfig() // Default path replanning config. See the API for the options here
-            ),
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+    // AutoBuilder.configureHolonomic(
+    //         this::getPose, // Robot pose supplier
+    //         this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+    //         () -> kinematics.toChassisSpeeds(getModuleStates()), // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+    //         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+    //                 new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+    //                 new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+    //                 4.5, // Max module speed, in m/s 
+    //                 0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+    //                 new ReplanningConfig() // Default path replanning config. See the API for the options here
+    //         ),
+    //         () -> {
+    //           // Boolean supplier that controls when the path will be mirrored for the red alliance
+    //           // This will flip the path being followed to the red side of the field.
+    //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
-            this // Reference to this subsystem to set requirements
-    );
+    //           var alliance = DriverStation.getAlliance();
+    //           if (alliance.isPresent()) {
+    //             return alliance.get() == DriverStation.Alliance.Red;
+    //           }
+    //           return false;
+    //         },
+    //         this // Reference to this subsystem to set requirements
+    // );
     this.limelightVisionSubsystem = limelightVisionSubsystem;  
   }
 
@@ -225,20 +218,20 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @param pose The pose to which to set the odometry.
    */
-  public void resetOdometry(Pose2d pose) {
-    double x = getAutoStart().getX();
-    double y = getAutoStart().getY();
-    Rotation2d theta = getAutoStart().getRotation();
-    m_odometry.resetPosition(
-        Rotation2d.fromDegrees(-pigeon.getAngle()),
-        new SwerveModulePosition[] {
-            frontLeft.getPosition(),
-            frontRight.getPosition(),
-            backLeft.getPosition(),
-            backRight.getPosition()
-        },
-        new Pose2d(x, y, theta));
-  }
+  // public void resetOdometry(Pose2d pose) {
+  //   // double x = getAutoStart().getX();
+  //   // double y = getAutoStart().getY();
+  //   // Rotation2d theta = getAutoStart().getRotation();
+  //   m_odometry.resetPosition(
+  //       Rotation2d.fromDegrees(-pigeon.getAngle()),
+  //       new SwerveModulePosition[] {
+  //           frontLeft.getPosition(),
+  //           frontRight.getPosition(),
+  //           backLeft.getPosition(),
+  //           backRight.getPosition()
+  //       },
+  //       // new Pose2d(x, y, theta));
+  // }
 
   /**
    * Method to drive the robot using joystick info.
@@ -467,29 +460,29 @@ public void driveRobotRelative(ChassisSpeeds speeds){
       //   return PathPlannerAuto.getStaringPoseFromAutoFile("3 middle close piece");
       // }
       //WHEN CHANGING THE AUTO NAME, REMEMBER TO CHANGE THE NAME IN OI AS WELL (DON'T BE ZACH)
-       private Pose2d getAutoStart(){
-          // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("Quick 4 piece close").get(0);
-        // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
-        // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close center").get(0);
-        PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("bottom clear").get(0);
-        // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("1 m back").get(0);
-        var alliance = DriverStation.getAlliance();
-        if(alliance.isPresent()){
-          SmartDashboard.putBoolean("in isPresent", true);
-          if (alliance.get()==DriverStation.Alliance.Red) {
-            SmartDashboard.putBoolean("in get red", true);
-                return jerry.flipPath().getPreviewStartingHolonomicPose();
-              }
-              else {
-                SmartDashboard.putBoolean("in get blue", true);
-                return jerry.getPreviewStartingHolonomicPose();
-              } 
-        } else {
-          SmartDashboard.putBoolean("in isPresent", false);
-          return jerry.flipPath().getPreviewStartingHolonomicPose();
-        }
+      //  private Pose2d getAutoStart(){
+      //     // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("Quick 4 piece close").get(0);
+      //   // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
+      //   // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close center").get(0);
+      //   // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("bottom clear").get(0);
+      //   // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("1 m back").get(0);
+      //   var alliance = DriverStation.getAlliance();
+      //   if(alliance.isPresent()){
+      //     SmartDashboard.putBoolean("in isPresent", true);
+      //     if (alliance.get()==DriverStation.Alliance.Red) {
+      //       SmartDashboard.putBoolean("in get red", true);
+      //           return jerry.flipPath().getPreviewStartingHolonomicPose();
+      //         }
+      //         else {
+      //           SmartDashboard.putBoolean("in get blue", true);
+      //           return jerry.getPreviewStartingHolonomicPose();
+      //         } 
+      //   } else {
+      //     SmartDashboard.putBoolean("in isPresent", false);
+      //     return jerry.flipPath().getPreviewStartingHolonomicPose();
+      //   }
               
-      }
+      // }
 }
 /*
  * four hundred lines!

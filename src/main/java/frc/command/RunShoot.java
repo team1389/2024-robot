@@ -23,7 +23,7 @@ public class RunShoot extends Command{
     @Override
     public void execute(){
      //   SmartDashboard.putNumber("Shooter timer", timer.get());
-        shooter.runShoot(3550);
+        shooter.runShoot(7000);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class TeleopAlignShootCmd extends SequentialCommandGroup{
             Commands.parallel(
               new AutoSetWristCmd(shooterSubsystem, limelightVisionSubsystem.toEncoderVal(), limelightVisionSubsystem),
                     Commands.sequence(
-                        new TeleopAutoShootPIDCmd(shooterSubsystem, 3750, limelightVisionSubsystem),//, //limelightVisionSubsystem.rpmTableForShoot()
+                        new TeleopAutoShootPIDCmd(shooterSubsystem, 5000, limelightVisionSubsystem),//, //limelightVisionSubsystem.rpmTableForShoot()
                         new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem)
             )
             )
